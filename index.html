@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>count</title>
+  <style>
+    body {
+      font-family: serif;
+      text-align: center;
+      margin-top: 10%;
+      background-color: #ede5d5;
+      font-size: 50px;
+      color: black;
+    }
+    #secret-image {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="countdown"></h2>
+  <div id="secret-image"></div>
+
+  <script>
+    // ⚠️ set your target date here
+    const targetDate = new Date("2025-05-14T12:00:00Z").getTime();
+
+    const countdownEl = document.getElementById("countdown");
+    const imageContainer = document.getElementById("secret-image");
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance <= 0) {
+        clearInterval(interval);
+        countdownEl.innerText = "00:00:00:00";
+        document.title = "fin";
+        revealImage();
+      } else {
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // pad numbers to 2 digits
+        const pad = (n) => n.toString().padStart(2, '0');
+        const formatted = `${pad(days)}:${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+
+        countdownEl.innerText = formatted;
+        document.title = formatted;
+      }
+    }, 1000);
+
+    function revealImage() {
+      img.src = "frame.png";
+      img.style.maxWidth = "80%";
+      imageContainer.appendChild(img);
+      imageContainer.style.display = "block";
+    }
+  </script>
+</body>
+</html>
